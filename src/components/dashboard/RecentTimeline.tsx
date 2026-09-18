@@ -51,7 +51,7 @@ const RecentTimeline: React.FC = () => {
             return (
               <li
                 key={event.id}
-                className="flex items-start gap-3 px-4 py-3 hover:bg-surface-divider/50 transition-colors cursor-pointer focus-within:ring-inset focus-within:ring-1 focus-within:ring-brand"
+                className="flex items-start gap-2.5 sm:gap-3 px-3.5 sm:px-4 py-2.5 sm:py-3 hover:bg-surface-divider/50 transition-colors cursor-pointer focus-within:ring-inset focus-within:ring-1 focus-within:ring-brand"
                 tabIndex={0}
                 role="button"
                 aria-label={`${event.title} — ${event.assetName || event.siteName || ''} — ${formatTimestamp(event.timestamp)}`}
@@ -63,28 +63,29 @@ const RecentTimeline: React.FC = () => {
 
                 {/* Content */}
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-baseline gap-2 flex-wrap">
-                    <span className="text-sm font-semibold text-gray-900">{event.title}</span>
-                    {event.severity && event.severity !== 'info' && (
-                      <SeverityBadge severity={event.severity} size="xs" />
-                    )}
+                  <div className="flex items-baseline justify-between gap-1.5 flex-wrap">
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      <span className="text-xs sm:text-sm font-semibold text-gray-900">{event.title}</span>
+                      {event.severity && event.severity !== 'info' && (
+                        <SeverityBadge severity={event.severity} size="xs" />
+                      )}
+                    </div>
+                    {/* Timestamp */}
+                    <time
+                      dateTime={event.timestamp}
+                      className="flex-shrink-0 text-2xs text-gray-400 font-mono tabular-nums"
+                    >
+                      {formatTimestamp(event.timestamp)}
+                    </time>
                   </div>
                   {event.assetName && (
-                    <div className="text-xs text-gray-500 mt-0.5 font-mono">{event.assetName}{event.siteName && ` · ${event.siteName}`}</div>
+                    <div className="text-2xs text-gray-500 mt-0.5 font-mono">{event.assetName}{event.siteName && ` · ${event.siteName}`}</div>
                   )}
                   {!event.assetName && event.siteName && (
-                    <div className="text-xs text-gray-500 mt-0.5">{event.siteName}</div>
+                    <div className="text-2xs text-gray-500 mt-0.5">{event.siteName}</div>
                   )}
                   <p className="text-xs text-gray-500 mt-0.5 line-clamp-1">{event.description}</p>
                 </div>
-
-                {/* Timestamp */}
-                <time
-                  dateTime={event.timestamp}
-                  className="flex-shrink-0 text-xs text-gray-400 font-mono tabular-nums"
-                >
-                  {formatTimestamp(event.timestamp)}
-                </time>
               </li>
             );
           })}

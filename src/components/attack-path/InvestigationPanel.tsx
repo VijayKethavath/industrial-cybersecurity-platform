@@ -61,7 +61,7 @@ const InvestigationPanel: React.FC<InvestigationPanelProps> = ({
 
   return (
     <aside
-      className="w-80 xl:w-96 flex-shrink-0 bg-white border-l border-surface-border flex flex-col h-full overflow-hidden animate-slide-in shadow-panel z-10"
+      className="fixed inset-y-0 right-0 z-50 w-full sm:w-96 lg:relative lg:inset-auto lg:z-10 lg:w-80 xl:w-96 flex-shrink-0 bg-white border-l border-surface-border flex flex-col h-full overflow-hidden animate-slide-in shadow-2xl lg:shadow-panel"
       aria-label="Investigation panel"
       role="complementary"
     >

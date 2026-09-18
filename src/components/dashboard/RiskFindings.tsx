@@ -39,13 +39,13 @@ const RiskFindings: React.FC = () => {
             <BarChart
               data={SEVERITY_BAR_DATA}
               layout="vertical"
-              margin={{ top: 0, right: 40, bottom: 0, left: 0 }}
+              margin={{ top: 0, right: 32, bottom: 0, left: -12 }}
             >
               <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#F1F5F9" />
-              <XAxis type="number" tick={{ fontSize: 11, fill: '#9CA3AF' }} axisLine={false} tickLine={false} />
-              <YAxis type="category" dataKey="name" tick={{ fontSize: 11, fill: '#374151', fontWeight: 500 }} width={52} axisLine={false} tickLine={false} />
+              <XAxis type="number" tick={{ fontSize: 10, fill: '#9CA3AF' }} axisLine={false} tickLine={false} />
+              <YAxis type="category" dataKey="name" tick={{ fontSize: 10, fill: '#374151', fontWeight: 500 }} width={48} axisLine={false} tickLine={false} />
               <Tooltip
-                contentStyle={{ fontSize: 12, borderRadius: 6, border: '1px solid #E2E8F0', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}
+                contentStyle={{ fontSize: 11, borderRadius: 6, border: '1px solid #E2E8F0', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}
                 formatter={(value: number, name: string) => [value, 'Open findings']}
                 labelFormatter={label => `Severity: ${label}`}
               />
@@ -71,21 +71,21 @@ const RiskFindings: React.FC = () => {
         <SectionHeader title="Finding Trend" subtitle="Last 8 days — open findings by severity" />
         <div role="img" aria-label="Line chart showing finding counts over 8 days. Critical and high counts are trending upward.">
           <ResponsiveContainer width="100%" height={160}>
-            <LineChart data={findingSummary.trend} margin={{ top: 4, right: 8, bottom: 0, left: -20 }}>
+            <LineChart data={findingSummary.trend} margin={{ top: 4, right: 10, bottom: 0, left: -22 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" />
               <XAxis
                 dataKey="date"
-                tick={{ fontSize: 10, fill: '#9CA3AF' }}
+                tick={{ fontSize: 9, fill: '#9CA3AF' }}
                 axisLine={false}
                 tickLine={false}
                 tickFormatter={d => d.slice(5)}
               />
-              <YAxis tick={{ fontSize: 10, fill: '#9CA3AF' }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fontSize: 9, fill: '#9CA3AF' }} axisLine={false} tickLine={false} />
               <Tooltip
                 contentStyle={{ fontSize: 11, borderRadius: 6, border: '1px solid #E2E8F0' }}
                 formatter={(value: number, name: string) => [value, name.charAt(0).toUpperCase() + name.slice(1)]}
               />
-              <Legend wrapperStyle={{ fontSize: 11, paddingTop: 4 }} />
+              <Legend wrapperStyle={{ fontSize: 10, paddingTop: 4 }} />
               <Line type="monotone" dataKey="critical" stroke="#DC2626" strokeWidth={2} dot={false} name="Critical" />
               <Line type="monotone" dataKey="high" stroke="#F97316" strokeWidth={2} dot={false} name="High" />
               <Line type="monotone" dataKey="medium" stroke="#EAB308" strokeWidth={1.5} dot={false} name="Medium" strokeDasharray="4 2" />
@@ -102,24 +102,25 @@ const RiskFindings: React.FC = () => {
           {recentCritical.map(f => (
             <div
               key={f.id}
-              className="flex items-start gap-3 p-3 rounded border border-red-100 bg-red-50/40 hover:bg-red-50 transition-colors cursor-pointer"
+              className="p-3 rounded-lg border border-red-100 bg-red-50/40 hover:bg-red-50/70 transition-colors cursor-pointer"
               role="article"
               aria-label={`Finding: ${f.title}`}
               tabIndex={0}
             >
-              <div className="flex-shrink-0 mt-0.5">
-                <SeverityBadge severity={f.severity} />
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-baseline gap-2 flex-wrap">
-                  <span className="text-sm font-semibold text-gray-900 truncate">{f.title}</span>
-                  <span className="text-xs text-gray-400 flex-shrink-0">{f.assetName} · {f.zoneName}</span>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 mb-1">
+                <div className="flex items-center gap-2 min-w-0">
+                  <div className="flex-shrink-0">
+                    <SeverityBadge severity={f.severity} size="xs" />
+                  </div>
+                  <span className="text-xs sm:text-sm font-semibold text-gray-900 truncate">{f.title}</span>
                 </div>
-                <p className="text-xs text-gray-600 mt-0.5 line-clamp-1">{f.description}</p>
+                <div className="flex items-center gap-2 text-2xs text-gray-400 flex-shrink-0">
+                  <span>{f.assetName} · {f.zoneName}</span>
+                  <span aria-hidden="true">·</span>
+                  <time>{new Date(f.detectedAt).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}</time>
+                </div>
               </div>
-              <div className="flex-shrink-0 text-2xs text-gray-400 whitespace-nowrap mt-0.5">
-                {new Date(f.detectedAt).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}
-              </div>
+              <p className="text-xs text-gray-600 line-clamp-2 sm:line-clamp-1">{f.description}</p>
             </div>
           ))}
         </div>

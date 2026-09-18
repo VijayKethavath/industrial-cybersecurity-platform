@@ -39,8 +39,7 @@ const NetworkTopology: React.FC = () => {
       />
       <Card padding="md">
         <div
-          className="relative w-full overflow-hidden rounded"
-          style={{ paddingBottom: '42%', minHeight: 200 }}
+          className="relative w-full overflow-hidden rounded min-h-[220px] sm:min-h-[240px]"
           role="img"
           aria-label="Network topology diagram showing 5 zones: Corporate, DMZ, Operations, Control, and Safety. Suspicious cross-zone connections are highlighted."
         >

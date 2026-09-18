@@ -29,23 +29,26 @@ const AttackPathPreview: React.FC = () => {
       />
       <Card padding="none" className="overflow-hidden">
         {/* Header strip */}
-        <div className="flex items-center justify-between bg-red-50 border-b border-red-100 px-4 py-2.5">
-          <div className="flex items-center gap-2">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 bg-red-50 border-b border-red-100 px-3.5 sm:px-4 py-2.5">
+          <div className="flex items-center gap-2 min-w-0">
             <AlertOctagon className="w-4 h-4 text-red-500 flex-shrink-0" aria-hidden="true" />
-            <span className="text-sm font-semibold text-red-900">{path.name}</span>
+            <span className="text-xs sm:text-sm font-semibold text-red-900 truncate">{path.name}</span>
           </div>
-          <div className="flex items-center gap-3">
-            <SeverityBadge severity={path.severity} />
+          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+            <SeverityBadge severity={path.severity} size="xs" />
             <ConfidenceIndicator confidence={path.confidence} />
           </div>
         </div>
 
-        <div className="p-4 grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="p-3.5 sm:p-4 grid grid-cols-1 lg:grid-cols-3 gap-5 lg:gap-6">
           {/* Path visualization */}
           <div className="col-span-1 lg:col-span-2">
-            <div className="text-2xs font-semibold text-gray-400 uppercase tracking-wider mb-3">Attack Chain</div>
+            <div className="flex items-center justify-between mb-2.5">
+              <span className="text-2xs font-semibold text-gray-400 uppercase tracking-wider">Attack Chain</span>
+              <span className="text-2xs text-brand font-medium sm:hidden">Swipe chain →</span>
+            </div>
             <div
-              className="flex items-stretch gap-0 overflow-x-auto pb-2"
+              className="flex items-stretch gap-0 overflow-x-auto pb-2 touch-scroll no-scrollbar sm:scrollbar-thin"
               role="img"
               aria-label={`Attack path: ${nodes.map(n => n.name).join(' → ')}`}
             >
@@ -58,22 +61,22 @@ const AttackPathPreview: React.FC = () => {
                   <React.Fragment key={node.id}>
                     {/* Node card */}
                     <div
-                      className={`flex-shrink-0 w-32 rounded border p-2.5 ${
+                      className={`flex-shrink-0 w-28 sm:w-32 rounded-lg border p-2 sm:p-2.5 ${
                         isTarget ? 'border-red-300 bg-red-50' :
                         isSource ? 'border-gray-200 bg-gray-50' :
                         'border-orange-200 bg-orange-50/50'
                       }`}
                     >
-                      <div className="text-2xs font-semibold text-gray-500 uppercase tracking-wide mb-1">{node.zoneName}</div>
+                      <div className="text-2xs font-semibold text-gray-500 uppercase tracking-wide mb-0.5 sm:mb-1 truncate">{node.zoneName}</div>
                       <div className="text-xs font-bold text-gray-900 truncate">{node.name}</div>
                       <div className="text-2xs text-gray-500 truncate">{node.type}</div>
                       {isTarget && (
-                        <div className="mt-1.5">
+                        <div className="mt-1">
                           <Badge variant="danger" size="xs">Crown Jewel</Badge>
                         </div>
                       )}
                       {node.role === 'pivot' && (
-                        <div className="mt-1.5">
+                        <div className="mt-1">
                           <Badge variant="warning" size="xs">Pivot</Badge>
                         </div>
                       )}
@@ -81,12 +84,12 @@ const AttackPathPreview: React.FC = () => {
 
                     {/* Edge */}
                     {edge && (
-                      <div className="flex flex-col items-center justify-center mx-1 flex-shrink-0 min-w-[60px]">
-                        <div className={`text-2xs font-mono font-semibold truncate max-w-[56px] text-center ${edge.isSuspicious ? 'text-red-600' : 'text-gray-400'}`}>
+                      <div className="flex flex-col items-center justify-center mx-1 flex-shrink-0 min-w-[50px] sm:min-w-[60px]">
+                        <div className={`text-2xs font-mono font-semibold truncate max-w-[50px] sm:max-w-[56px] text-center ${edge.isSuspicious ? 'text-red-600' : 'text-gray-400'}`}>
                           {edge.protocol}
                         </div>
                         <div className="flex items-center gap-0.5 mt-0.5">
-                          <div className={`h-0.5 w-8 ${edge.isSuspicious ? 'bg-red-400' : 'bg-gray-300'}`} aria-hidden="true" />
+                          <div className={`h-0.5 w-6 sm:w-8 ${edge.isSuspicious ? 'bg-red-400' : 'bg-gray-300'}`} aria-hidden="true" />
                           <ArrowRight className={`w-3 h-3 flex-shrink-0 ${edge.isSuspicious ? 'text-red-400' : 'text-gray-300'}`} aria-hidden="true" />
                         </div>
                         {edge.isSuspicious && (
@@ -112,7 +115,7 @@ const AttackPathPreview: React.FC = () => {
           </div>
 
           {/* Path metadata */}
-          <div className="col-span-1 border-l border-surface-border pl-4 lg:pl-6 flex flex-col gap-3">
+          <div className="col-span-1 border-t lg:border-t-0 lg:border-l border-surface-border pt-4 lg:pt-0 pl-0 lg:pl-6 flex flex-col gap-3">
             <div>
               <div className="text-2xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Path Summary</div>
               <dl className="grid grid-cols-2 gap-x-4 gap-y-2">
@@ -134,7 +137,7 @@ const AttackPathPreview: React.FC = () => {
             <div className="mt-auto pt-2">
               <button
                 onClick={() => navigate('/attack-path')}
-                className="w-full flex items-center justify-center gap-2 bg-brand text-white text-sm font-semibold py-2.5 px-4 rounded-md hover:bg-brand-600 active:bg-brand-700 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
+                className="w-full flex items-center justify-center gap-2 bg-brand text-white text-sm font-semibold min-h-[44px] py-2.5 px-4 rounded-lg hover:bg-brand-600 active:bg-brand-700 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 shadow-sm active:scale-[0.99]"
                 aria-label="Investigate this attack path in the investigation workspace"
               >
                 <GitBranch className="w-4 h-4" aria-hidden="true" />

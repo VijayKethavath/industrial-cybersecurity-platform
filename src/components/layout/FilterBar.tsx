@@ -32,13 +32,13 @@ const FilterSelect: React.FC<{
   nullable?: boolean;
 }> = ({ label, value, options, onChange, nullable = true }) => {
   return (
-    <div className="relative flex items-center">
+    <div className="relative flex items-center flex-shrink-0">
       <select
         value={value}
         onChange={e => onChange(e.target.value)}
         aria-label={label}
         className={clsx(
-          'appearance-none pl-2.5 pr-7 py-1.5 text-xs border rounded bg-white focus:outline-none focus:ring-1 focus:ring-brand focus:border-brand transition-colors cursor-pointer',
+          'appearance-none pl-2.5 pr-7 py-2 sm:py-1.5 text-xs border rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-brand focus:border-brand transition-colors cursor-pointer min-h-[36px] sm:min-h-0',
           value && value !== 'all' ? 'border-brand text-brand font-medium' : 'border-gray-200 text-gray-600',
         )}
       >
@@ -47,7 +47,7 @@ const FilterSelect: React.FC<{
           <option key={o.value} value={o.value}>{o.label}</option>
         ))}
       </select>
-      <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-3 h-3 text-gray-400 pointer-events-none" aria-hidden="true" />
+      <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400 pointer-events-none" aria-hidden="true" />
     </div>
   );
 };
@@ -74,10 +74,10 @@ const FilterBar: React.FC<FilterBarProps> = ({ filters, onChange }) => {
     <div
       role="search"
       aria-label="Filter controls"
-      className="flex items-center gap-2 px-4 py-2.5 bg-white border-b border-surface-border flex-shrink-0 overflow-x-auto"
+      className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-white border-b border-surface-border flex-shrink-0 overflow-x-auto no-scrollbar touch-scroll"
     >
-      <Filter className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" aria-hidden="true" />
-      <span className="text-xs text-gray-400 font-medium flex-shrink-0">Filters:</span>
+      <Filter className="w-3.5 h-3.5 text-gray-400 flex-shrink-0 hidden sm:block" aria-hidden="true" />
+      <span className="text-xs text-gray-400 font-medium flex-shrink-0 hidden sm:block">Filters:</span>
 
       <FilterSelect
         label="Site"
@@ -100,10 +100,10 @@ const FilterBar: React.FC<FilterBarProps> = ({ filters, onChange }) => {
         onChange={v => onChange({ ...filters, severity: (v as FilterState['severity']) || null })}
       />
 
-      <div className="h-4 w-px bg-gray-200 mx-1 flex-shrink-0" aria-hidden="true" />
+      <div className="h-4 w-px bg-gray-200 mx-0.5 sm:mx-1 flex-shrink-0" aria-hidden="true" />
 
       <FilterSelect
-        label="Time Range"
+        label="Time"
         value={filters.timeRange}
         options={TIME_RANGES}
         onChange={v => onChange({ ...filters, timeRange: v as FilterState['timeRange'] })}
@@ -113,10 +113,10 @@ const FilterBar: React.FC<FilterBarProps> = ({ filters, onChange }) => {
       {hasActiveFilters && (
         <button
           onClick={clearAll}
-          className="flex items-center gap-1 text-2xs text-brand font-medium hover:text-brand-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded px-1"
+          className="flex items-center gap-1 text-xs text-brand font-semibold hover:text-brand-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded px-2 py-1.5 bg-brand-50 border border-brand-200 flex-shrink-0"
           aria-label="Clear all filters"
         >
-          <X className="w-3 h-3" aria-hidden="true" />
+          <X className="w-3.5 h-3.5" aria-hidden="true" />
           Clear
         </button>
       )}

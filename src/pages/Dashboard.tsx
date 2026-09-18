@@ -16,11 +16,11 @@ interface DashboardProps {
 
 const Dashboard: React.FC<DashboardProps> = ({ filters }) => {
   return (
-    <div className="px-6 py-5 space-y-8 max-w-screen-2xl mx-auto">
+    <div className="px-3.5 sm:px-6 py-4 sm:py-6 space-y-6 sm:space-y-8 max-w-screen-2xl mx-auto">
       {/* Page Header */}
       <div>
-        <h1 className="text-xl font-bold text-gray-900">Security Overview</h1>
-        <p className="text-sm text-gray-500 mt-0.5">
+        <h1 className="text-lg sm:text-xl font-bold text-gray-900">Security Overview</h1>
+        <p className="text-xs sm:text-sm text-gray-500 mt-0.5">
           Operational security posture across monitored environments
           {filters.siteId && <span className="text-brand font-medium"> · {filters.siteId.replace('site-', 'Plant 0').replace('p', '')}</span>}
         </p>

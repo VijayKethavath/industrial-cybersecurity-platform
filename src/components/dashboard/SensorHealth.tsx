@@ -101,10 +101,10 @@ const SensorHealth: React.FC = () => {
                 <span className="text-xs font-semibold text-yellow-900">{sensor.name}</span>
                 <Badge variant="warning" size="xs">DEGRADED</Badge>
               </div>
-              <div className="grid grid-cols-3 gap-2 text-2xs text-yellow-800 mb-1.5">
-                <div><span className="text-yellow-500">Site:</span> {sensor.siteName}</div>
-                <div><span className="text-yellow-500">Zone:</span> {sensor.zoneName}</div>
-                <div><span className="text-yellow-500">Last seen:</span> {formatRelativeTime(sensor.lastTelemetry)}</div>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-2 text-2xs text-yellow-800 mb-2">
+                <div><span className="text-yellow-600 font-medium">Site:</span> {sensor.siteName}</div>
+                <div><span className="text-yellow-600 font-medium">Zone:</span> {sensor.zoneName}</div>
+                <div><span className="text-yellow-600 font-medium">Last seen:</span> {formatRelativeTime(sensor.lastTelemetry)}</div>
               </div>
               <p className="text-2xs text-yellow-700">{sensor.reason}</p>
               <div className="flex items-center gap-1 mt-2">
